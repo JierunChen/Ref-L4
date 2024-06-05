@@ -35,7 +35,7 @@ pip install ./
 
 ## Data Loader
 
-We provide the `RefL4Dataset` class, which inherits from `torch.utils.data.Dataset`:
+We provide the `RefL4Dataset` class, which inherits from `torch.utils.data.Dataset`. It accepts the following arguments during initialization:
 
 ```txt
 - dataset_path (str): Path to the dataset directory.
@@ -107,7 +107,7 @@ To reproduce this result, you can run:
 python eval_pred.py \
     --dataset_path <path to Ref-L4 folder> \
     --split all \
-    --dataset_path ./demo_models/cogvlm_grounding_pred.json
+    --pred_json_path ./demo_models/cogvlm_grounding_pred.json
 ```
 
 ## Dataset License
