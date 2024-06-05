@@ -76,7 +76,7 @@ The evaluation considers three parts:
 2. The accuracy of small, medium, and large objects.
 3. The average accuracy across different classes.
 
-Here is an example output for the predictions from Shikra on the validation set:
+Here is an example output for the predictions from CogVLM-Grounding on the "all" splits:
 
 ```txt
 Item for split all                    | Value
