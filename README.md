@@ -4,7 +4,7 @@ This repository contains the data loader and evaluation code for our [Ref-L4](ht
 
 ## Introduction
 
-Referring expression comprehension (REC) involves localizing a target based on a textual description. Recent advancements with large multimodal models (LMMs) like CogVLM have achieved high accuracy (92.44% on RefCOCO). However, existing benchmarks (RefCOCO, RefCOCO+, RefCOCOg) have high labeling error rates (14%, 24%, and 5% respectively), undermining evaluations. We address this by excluding problematic instances and reevaluating LMMs, showing significant accuracy improvements. In reponse, we also introduce Ref-L4, a new REC benchmark with:
+Referring expression comprehension (REC) involves localizing a target based on a textual description. Recent advancements with large multimodal models (LMMs) like CogVLM have achieved high accuracy (92.44% on RefCOCO). However, existing benchmarks (RefCOCO, RefCOCO+, RefCOCOg) have high labeling error rates (14%, 24%, and 5% respectively), undermining evaluations. We address this by excluding problematic instances and reevaluating LMMs, showing significant accuracy improvements. We also introduce Ref-L4, a new REC benchmark with:
 
 - A substantial sample size with 45,341 annotations
 - A diverse range of object categories with 365 distinct types and varying instance scales from 30 to 3,767
