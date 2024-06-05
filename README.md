@@ -1,4 +1,4 @@
-# Ref-L4, a New REC Benchmark in the LMM Era
+# Ref-L4: a New REC Benchmark in the LMM Era
 
 This repository contains the data loader and evaluation code for our [Ref-L4](https://huggingface.co/datasets/JierunChen/Ref-L4), a new REC benchmark in the LMM era.
 
