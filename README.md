@@ -104,7 +104,7 @@ Avg class-level accs for copy         | 72.42, 52.56
 To reproduce this result, you can run:
 
 ```bash
-python eval_pred.py \
+python evaluate_pred.py \
     --dataset_path <path to Ref-L4 folder> \
     --split all \
     --pred_json_path ./demo_models/cogvlm_grounding_pred.json
