@@ -50,22 +50,14 @@ The [Ref-L4 dataset](https://huggingface.co/datasets/JierunChen/Ref-L4) can also
 
 ## 🗂️ Evaluation
 
-After getting model predictions and storing them into a json file (see example [cogvlm_grounding_pred.json](https://github.com/JierunChen/Ref-L4/blob/main/demo_models/cogvlm_grounding_pred.json) for formatting), we run the following command to evaluate the predictions with ground truth.
+After getting model predictions, we can save them as a json file, which is a list of dictionaries, each containing three keys: `[id, pred_bbox, format]`. The `id` is the annotation ID, and the `format` specifies the format of `pred_bbox`, which should be either `xyxy` or `xywh`.
+A sample prediction file the can be found [here](./demo_models/cogvlm_grounding_pred.json). It is obtained by running the CogVLM-Grounding model.
+
+Now we can run the following command to evaluate the predictions with ground truth.
 
 ```bash
 python evaluate_pred.py --dataset_path JierunChen/Ref-L4 --split all --pred_json_path ./demo_models/cogvlm_grounding_pred.json
 ```
-
-To evaluate predictions, the `evaluate` method is called, which accepts two arguments: `predictions` and `save_file`. The `predictions` should be a list of dictionaries, each containing three keys: `[id, pred_bbox, format]`. The `id` is the annotation ID, and the `format` specifies the format of `pred_bbox`, which should be either `xyxy` or `xywh`.
-A sample prediction file the can be found [here](./demo_models/cogvlm_grounding_pred.json), which is obtained by running the CogVLM-Grounding model.
-
-### Evaluation Output
-
-The evaluation considers three parts:
-
-1. The accuracy under various IoU thresholds and the average accuracy of IoU from 0.5 to 0.95 with a stride of 0.05.
-2. The accuracy of small, medium, and large objects.
-3. The average accuracy across different classes.
 
 Here is an example output for the predictions from CogVLM-Grounding on the "all" splits:
 
@@ -91,12 +83,13 @@ Average class-level macc iou 0.5:0.95 | 52.56151912966669
 Avg class-level accs for copy         | 72.42, 52.56
 ```
 
+The output includes three parts:
+- The accuracy under various IoU thresholds and the average accuracy of IoU from 0.5 to 0.95 with a stride of 0.05.
+- The accuracy of small, medium, and large objects.
+- The average accuracy across different classes.
 
-To reproduce this result, you can run:
 
-
-
-## Dataset License
+## 📖 Dataset License
 
 The Ref-L4 dataset is released under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license](https://creativecommons.org/licenses/by-nc/4.0/). Please note that the images in the Ref-L4 dataset are derived from the following datasets, each with their respective licenses:
 - **RefCOCO**: Licensed under the [Apache-2.0 license](http://www.apache.org/licenses/).
