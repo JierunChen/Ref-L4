@@ -15,7 +15,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evaluate the predictions on Ref-L4 dataset.')
-    parser.add_argument('--dataset_path', type=str, required=True, help='Path to the Ref-L4 dataset.')
+    parser.add_argument('--dataset_path', type=str, default="JierunChen/Ref-L4", help='Path to the Ref-L4 dataset.')
     parser.add_argument('--split', type=str, default='all', choices=['val', 'test', 'all'], help='Dataset split to use (val, test, all).')
     parser.add_argument('--pred_json_path', type=str, required=True, help='Path to the predictions JSON file.')
 

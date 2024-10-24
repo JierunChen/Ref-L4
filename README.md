@@ -2,7 +2,7 @@
 
 This repository contains the data loader and evaluation code for our [Ref-L4](https://huggingface.co/datasets/JierunChen/Ref-L4), a new REC benchmark in the LMM era. Check out our paper [Revisiting Referring Expression Comprehension Evaluation in the Era of Large Multimodal Models](https://arxiv.org/abs/2406.16866) for more details.
 
-## Introduction
+## 🧭 Introduction  
 
 Referring expression comprehension (REC) involves localizing a target based on a textual description. Recent advancements with large multimodal models (LMMs) like CogVLM have achieved high accuracy (92.44% on RefCOCO). However, existing benchmarks (RefCOCO, RefCOCO+, RefCOCOg) have high labeling error rates (14%, 24%, and 5% respectively), undermining evaluations. We address this by excluding problematic instances and reevaluating LMMs, showing significant accuracy improvements. We also introduce Ref-L4, a new REC benchmark with:
 
@@ -11,58 +11,49 @@ Referring expression comprehension (REC) involves localizing a target based on a
 - Lengthy referring expressions averaging 24.2 words
 - An extensive vocabulary comprising 22,813 unique words
 
-### Ref-L4 examples
+### 😃 Ref-L4 examples
 
 <img src="figure/examples.png"  align = "center"  width="800" />
 
-### Labeling errors in RefCOCO, +, g
+### 😑 Labeling errors in RefCOCO, +, g
 
 In the REC task, a referring expression should uniquely describe an instance, which is represented by an accurate bounding box. We have identified and visualized three common types of labeling errors in the RefCOCO, RefCOCO+, and RefCOCOg benchmarks: (a) non-unique referring expressions, which refer to multiple instances within the same image; (b) inaccurate bounding boxes; and (c) misalignment between target instances and their referring expressions, where the referring expressions are either ambiguous or do not refer to any instance in the image.
 
 <img src="figure/error_samples.png"  align = "center"  width="800" />
 
-## Dataset Download
-
-The [Ref-L4 dataset](https://huggingface.co/datasets/JierunChen/Ref-L4) can be downloaded from Hugging Face.
-
-## Installation
-
-You can install the data loader and evaluation API with the following command:
+## 🛠️ Installation
 
 ```bash
+git clone https://github.com/JierunChen/Ref-L4.git
+cd Ref-L4
 pip install ./
 ```
 
-## Data Loader
+## 🚀 Loading Ref-L4 Dataset
 
-We provide the `RefL4Dataset` class, which inherits from `torch.utils.data.Dataset`. It accepts the following arguments during initialization:
+```python
+from ref_l4 import RefL4Dataset
+ref_l4_dataset = RefL4Dataset("JierunChen/Ref-L4", split='all')
+print(len(ref_l4_dataset))
+# iterate over the dataset
+for img_pil, data in ref_l4_dataset:
+    print(data)
+    break
 
-```txt
-- dataset_path (str): Path to the dataset directory.
-- split (str): Dataset split, typically "val", "test", or "all".
-- images_file (str): Name of the tar file containing images, default to "images.tar.gz".
-- custom_transforms: Custom image transformations to apply, default to "None".
+# swith to 'val' or 'test' split
+ref_l4_dataset.change_split('val')
+print(len(ref_l4_dataset))
 ```
 
-Additionally, we offer the `change_split` method within the class, which accepts a `split` parameter and is used to switch the dataset split.
+The [Ref-L4 dataset](https://huggingface.co/datasets/JierunChen/Ref-L4) can also be downloaded from Hugging Face.
 
-## Evaluation
 
-### Evaluation API Introduction
+## 🗂️ Evaluation
 
-We provide the `RefL4Evaluator` class, which takes the following arguments:
+After getting model predictions and storing them into a json file (see example [cogvlm_grounding_pred.json](https://github.com/JierunChen/Ref-L4/blob/main/demo_models/cogvlm_grounding_pred.json) for formatting), we run the following command to evaluate the predictions with ground truth.
 
-```txt
-- dataset (RefL4Dataset): The RefL4Dataset dataset for evaluation.
-- split (str): The split of the dataset to evaluate. If None, use the dataset's split. Default is None.
-- ann_level_acc_ths (List[float]): The thresholds to evaluate the annotation level accuracy. Default is [0.5, 0.75, 0.9].
-- ann_level_macc_ths (List[float]): The thresholds to evaluate the annotation level mAcc. Default is [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95].
-- size_level_acc_ths (List[float]): The thresholds to evaluate the size level accuracy. Default is [0.5, ].
-- size_level_macc_ths (List[float]): The thresholds to evaluate the size level mAcc. Default is [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95].
-- small_size_th (int): The threshold to define the small size bbox. Default is 128.
-- large_size_th (int): The threshold to define the large size bbox. Default is 256.
-- avg_cls_level_acc_ths (List[float]): The thresholds to evaluate the average of all class level accuracy. Default is [0.5, ].
-- avg_cls_level_macc_ths (List[float]): The thresholds to evaluate the average of all class level mAcc. Default is [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95].
+```bash
+python evaluate_pred.py --dataset_path JierunChen/Ref-L4 --split all --pred_json_path ./demo_models/cogvlm_grounding_pred.json
 ```
 
 To evaluate predictions, the `evaluate` method is called, which accepts two arguments: `predictions` and `save_file`. The `predictions` should be a list of dictionaries, each containing three keys: `[id, pred_bbox, format]`. The `id` is the annotation ID, and the `format` specifies the format of `pred_bbox`, which should be either `xyxy` or `xywh`.
@@ -103,12 +94,7 @@ Avg class-level accs for copy         | 72.42, 52.56
 
 To reproduce this result, you can run:
 
-```bash
-python evaluate_pred.py \
-    --dataset_path <path to Ref-L4 folder> \
-    --split all \
-    --pred_json_path ./demo_models/cogvlm_grounding_pred.json
-```
+
 
 ## Dataset License
 

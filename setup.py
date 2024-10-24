@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ref_l4',
-    version='1.0',
+    version='1.1',
     packages=find_packages(),
     py_modules=['dataloader', 'evaluation', 'overlaps'],
     install_requires=[

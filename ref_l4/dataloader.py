@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 from datasets import load_dataset, concatenate_datasets
+from huggingface_hub import hf_hub_download
 from PIL import Image
 import tarfile
 import io
@@ -26,14 +27,20 @@ class RefL4Dataset(Dataset):
 
     def _load_dataset(self):
         self.dataset = load_dataset(self.dataset_path)
+        image_tar_path = f"{self.dataset_path}/{self.images_file}"
+        # manually download the images.tar.gz file 
+        if self.dataset_path == 'JierunChen/Ref-L4':
+            image_tar_path = hf_hub_download(repo_id="JierunChen/Ref-L4", filename="images.tar.gz", repo_type="dataset")
+            print(f"Downloaded images.tar.gz to {image_tar_path}")
+
         all_splits=concatenate_datasets([self.dataset['val'],self.dataset['test']])
         self.dataset['all']=all_splits
-        self.images=self._load_images_from_tar()
+        self.images=self._load_images_from_tar(image_tar_path)
 
-    def _load_images_from_tar(self):
+    def _load_images_from_tar(self, image_tar_path):
         images = {}
-        print(f"Loading images from {self.dataset_path}/{self.images_file}")
-        with tarfile.open(f"{self.dataset_path}/{self.images_file}", "r:gz") as tar:
+        print(f"Loading images from {image_tar_path}")
+        with tarfile.open(image_tar_path, "r:gz") as tar:
             for member in tqdm(tar.getmembers()):
                 if member.isfile() and member.name.endswith(('jpg', 'jpeg', 'png', 'webp')):
                     f = tar.extractfile(member)
@@ -68,8 +75,7 @@ class RefL4Dataset(Dataset):
 
 # Example usage:
 if __name__ == '__main__':
-    custom_transforms = None
-    ref_l4_dataset = RefL4Dataset('/Users/jchen12/Documents/misc/Ref-L4', split='all', custom_transforms=custom_transforms)
+    ref_l4_dataset = RefL4Dataset("JierunChen/Ref-L4", split='all')
     print(len(ref_l4_dataset))
     print(ref_l4_dataset[0])
     # swith to val split
