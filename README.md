@@ -4,12 +4,18 @@ This repository contains the data loader and evaluation code for our [Ref-L4](ht
 
 ## 🧭 Introduction  
 
-Referring expression comprehension (REC) involves localizing a target based on a textual description. Recent advancements with large multimodal models (LMMs) like CogVLM have achieved high accuracy (92.44% on RefCOCO). However, existing benchmarks (RefCOCO, RefCOCO+, RefCOCOg) have high labeling error rates (14%, 24%, and 5% respectively), undermining evaluations. We address this by excluding problematic instances and reevaluating LMMs, showing significant accuracy improvements. We also introduce Ref-L4, a new REC benchmark with:
+Referring expression comprehension (REC) is the task of locating a specific region in an image based on a textual description. Current popular REC benchmarks, such as RefCOCO, RefCOCO+, and RefCOCOg, may not fully capture the comprehensive capabilities of large multimodal models (LMMs) due to limitations in:
 
-- A substantial sample size with 45,341 annotations
-- A diverse range of object categories with 365 distinct types and varying instance scales from 30 to 3,767
-- Lengthy referring expressions averaging 24.2 words
-- An extensive vocabulary comprising 22,813 unique words
+- **Linguistic complexity**: Expressions tend to be overly simple, often consisting of single words like "yellow," "lady," or "far left person."
+- **Visual complexity**: The benchmarks are restricted to a limited set of object categories (fewer than 80).
+- **Labeling accuracy**: RefCOCO, RefCOCO+, and RefCOCOg have high labeling error rates (14%, 24%, and 5%, respectively).
+
+In response, we rigorously exclude the problematic instances and reevaluating LMMs, showing significant accuracy improvements. We also introduce Ref-L4, a new and more coprehensive REC benchmark to evaluate LMMs. Ref-L4 offers:
+
+- **Lengthy referring expressions** averaging 24.2 words;
+- **Extensive vocabulary** comprising 22,813 unique words;
+- **Diverse objects** covering 365 categories with varying instance scales (from 30 to 3,767);
+- **Substantial sample size** with 45,341 annotations.
 
 ### 😃 Ref-L4 examples
 
